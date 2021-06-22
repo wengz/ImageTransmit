@@ -1,0 +1,3 @@
+include ':imageTransmit'
+include ':app'
+rootProject.name = "ImageTransmit"
