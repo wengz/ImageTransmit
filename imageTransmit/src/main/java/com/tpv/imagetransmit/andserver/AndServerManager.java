@@ -24,17 +24,17 @@ public class AndServerManager {
                 .listener(new Server.ServerListener() {
                     @Override
                     public void onStarted() {
-                        Log.d(TAG, "The server started successfully");
+                        Log.d(TAG, "The server started successfully >>>");
                     }
 
                     @Override
                     public void onStopped() {
-                        Log.d(TAG, "The server has stopped");
+                        Log.d(TAG, "The server has stopped >>> ");
                     }
 
                     @Override
                     public void onException(Exception e) {
-                        Log.d(TAG, "An exception occurred while the server was starting");
+                        Log.d(TAG, "An exception occurred while the server was starting >>> ");
                     }
                 })
                 .build();
