@@ -57,6 +57,7 @@ allprojects {
 ```gradle
 dependencies {
 	implementation 'com.github.wengz:ImageTransmit:{version}'
+	...
 }
 ```
 添加依赖时请替换下述 {version} 字段为 https://jitpack.io/#wengz/ImageTransmit 上的最新版本号
