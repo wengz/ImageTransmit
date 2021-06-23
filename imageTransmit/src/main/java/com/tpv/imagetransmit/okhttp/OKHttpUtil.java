@@ -23,7 +23,7 @@ public class OKHttpUtil {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
             Request.Builder builder = new Request.Builder();
-            Request request = builder.url(url).post(Util.EMPTY_REQUEST).build();
+            Request request = builder.url(url).post(RequestBody.create(null, "")).build();
             Call call = okHttpClient.newCall(request) ;
             Response response = call.execute();
             if (response.code() == StatusCode.SC_OK) {
