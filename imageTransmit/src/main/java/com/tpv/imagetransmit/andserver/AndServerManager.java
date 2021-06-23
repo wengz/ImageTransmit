@@ -14,9 +14,6 @@ public class AndServerManager {
 
     private Server mServer;
 
-    /**
-     * Create server.
-     */
     public AndServerManager(Context context) {
         mServer = AndServer.webServer(context)
                 .port(8080)
@@ -24,41 +21,34 @@ public class AndServerManager {
                 .listener(new Server.ServerListener() {
                     @Override
                     public void onStarted() {
-                        Log.d(TAG, "The server started successfully >>>");
+                        Log.d(TAG, "The server started successfully");
                     }
 
                     @Override
                     public void onStopped() {
-                        Log.d(TAG, "The server has stopped >>> ");
+                        Log.d(TAG, "The server has stopped");
                     }
 
                     @Override
                     public void onException(Exception e) {
-                        Log.d(TAG, "An exception occurred while the server was starting >>> ");
+                        Log.d(TAG, "An exception occurred while the server was starting");
                     }
                 })
                 .build();
     }
 
-    /**
-     * Start server.
-     */
     public void startServer() {
         if (mServer.isRunning()) {
-            // TODO The server is already up.
         } else {
             mServer.startup();
         }
     }
 
-    /**
-     * Stop server.
-     */
     public void stopServer() {
         if (mServer.isRunning()) {
             mServer.shutdown();
         } else {
-            Log.w("AndServer", "The server has not started yet.");
+            Log.w(TAG, "The server has not started yet.");
         }
     }
 }

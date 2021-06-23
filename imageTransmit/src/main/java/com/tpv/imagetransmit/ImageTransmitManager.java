@@ -38,15 +38,6 @@ public class ImageTransmitManager {
         mAndServerManager = new AndServerManager(sContext);
         mTasks = new LinkedList<>();
         mIsExecutingTask = false;
-        setImageRecListener(new ImageRecListener() {
-            @Override
-            public void onImageReceive(List<File> images) {
-                Log.d("zzz", "onImageReceive: images>>>"+images.size());
-                for (File file:images) {
-                    Log.d("zzz", "onImageReceive: file name="+file.getName());
-                }
-            }
-        });
     }
 
     public static void init(Context context) {

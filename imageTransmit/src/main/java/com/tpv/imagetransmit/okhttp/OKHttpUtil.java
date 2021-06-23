@@ -27,12 +27,6 @@ public class OKHttpUtil {
         call.enqueue(callback);
     }
 
-    /**
-     * 获得Request实例
-     * @param url
-     * @param fileNames 完整的文件路径
-     * @return
-     */
     private static Request getRequest(String url, List<String> fileNames) {
         Request.Builder builder = new Request.Builder();
         builder.url(url)
@@ -43,7 +37,6 @@ public class OKHttpUtil {
     /**
      * 通过上传的文件的完整路径生成RequestBody
      * @param fileNames 完整的文件路径
-     * @return
      */
     private static RequestBody getRequestBody(List<String> fileNames) {
         //创建MultipartBody.Builder，用于添加请求的数据
@@ -54,7 +47,7 @@ public class OKHttpUtil {
             String fileType = getMimeType(file.getName());
             builder.addFormDataPart( //给Builder添加上传的文件
                     "images",  //请求的名字
-                    file.getName(), //文件的文字，服务器端用来解析的
+                    file.getName(), //文件的名字，服务器端用来解析的
                     RequestBody.create(MediaType.parse(fileType), file) //创建RequestBody，把上传的文件放入
             );
         }
@@ -63,9 +56,6 @@ public class OKHttpUtil {
 
     /**
      * 获取文件MimeType
-     *
-     * @param filename 文件名
-     * @return
      */
     private static String getMimeType(String filename) {
         FileNameMap filenameMap = URLConnection.getFileNameMap();
