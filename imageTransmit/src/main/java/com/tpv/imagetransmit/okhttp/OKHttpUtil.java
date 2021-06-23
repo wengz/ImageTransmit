@@ -1,30 +1,66 @@
 package com.tpv.imagetransmit.okhttp;
 
+import com.tpv.imagetransmit.ImageSendListener;
+import com.yanzhenjie.andserver.http.StatusCode;
+
 import java.io.File;
 import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.internal.Util;
 
 public class OKHttpUtil {
 
-    /**
-     * 根据url，发送异步Post请求
-     * @param url 提交到服务器的地址
-     * @param fileNames 完整的上传的文件的路径名
-     * @param callback OkHttp的回调接口
-     */
-    public static void upLoadFile(String url, List<String> fileNames, Callback callback){
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Call call = okHttpClient.newCall(getRequest(url,fileNames)) ;
-        call.enqueue(callback);
+    public static boolean startUpload(String url, ImageSendListener callback) {
+        try {
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Request.Builder builder = new Request.Builder();
+            Request request = builder.url(url).post(Util.EMPTY_REQUEST).build();
+            Call call = okHttpClient.newCall(request) ;
+            Response response = call.execute();
+            if (response.code() == StatusCode.SC_OK) {
+                return true;
+            } else {
+                if (callback != null) {
+                    callback.onFail();
+                }
+                return false;
+            }
+        }catch (Exception e){
+            if (callback != null) {
+                callback.onFail();
+            }
+            return false;
+        }
+    }
+
+    public static void upLoadFile(String url, List<String> fileNames, ImageSendListener callback){
+        try {
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Call call = okHttpClient.newCall(getRequest(url,fileNames)) ;
+            Response response = call.execute();
+            if (response.code() == StatusCode.SC_OK) {
+                if (callback != null) {
+                    callback.onSuccess();
+                }
+            } else {
+                if (callback != null) {
+                    callback.onFail();
+                }
+            }
+        } catch (Exception e) {
+            if (callback != null) {
+                callback.onFail();
+            }
+        }
     }
 
     private static Request getRequest(String url, List<String> fileNames) {

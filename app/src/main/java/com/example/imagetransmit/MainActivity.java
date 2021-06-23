@@ -13,21 +13,11 @@ import android.widget.TextView;
 import com.tpv.imagetransmit.ImageRecListener;
 import com.tpv.imagetransmit.ImageTransTask;
 import com.tpv.imagetransmit.ImageTransmitManager;
-import com.tpv.imagetransmit.andserver.AndServerManager;
-import com.tpv.imagetransmit.okhttp.OKHttpUtil;
-import com.tpv.imagetransmit.util.ImageSendListener;
-
-import org.jetbrains.annotations.NotNull;
+import com.tpv.imagetransmit.ImageSendListener;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,12 +52,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ImageTransTask imageTransTask = new ImageTransTask();
                 imageTransTask.ip = "127.0.0.1";
-                imageTransTask.files = Arrays.asList(mLocalImgs);
+                imageTransTask.files = Arrays.asList(new String[]{ mLocalImgs[0], mLocalImgs[1]});
                 imageTransTask.callback = new ImageSendListener() {
 
                     @Override
                     public void onSuccess() {
                         Log.d("zzz", "onSuccess: imageTransTask_1 >>> success");
+                        try {
+                            Thread.sleep(2000);
+                        }catch (Exception e){}
                     }
 
                     @Override
@@ -76,6 +69,47 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
                 ImageTransmitManager.getInstance().putTransTask(imageTransTask);
+
+                imageTransTask = new ImageTransTask();
+                imageTransTask.ip = "127.0.0.1";
+                imageTransTask.files = Arrays.asList(new String[]{ mLocalImgs[2], mLocalImgs[3], mLocalImgs[4], mLocalImgs[5] });
+                imageTransTask.callback = new ImageSendListener() {
+
+                    @Override
+                    public void onSuccess() {
+                        Log.d("zzz", "onSuccess: imageTransTask_2 >>> success");
+                        try {
+                            Thread.sleep(2000);
+                        }catch (Exception e){}
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Log.d("zzz", "onSuccess: imageTransTask_2 >>> fail");
+                    }
+                };
+                ImageTransmitManager.getInstance().putTransTask(imageTransTask);
+
+                imageTransTask = new ImageTransTask();
+                imageTransTask.ip = "127.0.0.1";
+                imageTransTask.files = Arrays.asList(new String[]{ mLocalImgs[6], mLocalImgs[7] });
+                imageTransTask.callback = new ImageSendListener() {
+
+                    @Override
+                    public void onSuccess() {
+                        Log.d("zzz", "onSuccess: imageTransTask_3 >>> success");
+                        try {
+                            Thread.sleep(2000);
+                        }catch (Exception e){}
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Log.d("zzz", "onSuccess: imageTransTask_3 >>> fail");
+                    }
+                };
+                ImageTransmitManager.getInstance().putTransTask(imageTransTask);
+
             }
         });
 

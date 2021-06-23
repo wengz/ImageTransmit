@@ -1,26 +1,12 @@
 package com.tpv.imagetransmit;
 
-import android.app.TaskStackBuilder;
 import android.content.Context;
-import android.util.Log;
 
 import com.tpv.imagetransmit.andserver.AndServerManager;
 import com.tpv.imagetransmit.okhttp.OKHttpUtil;
-import com.tpv.imagetransmit.util.ImageSendListener;
-import com.tpv.imagetransmit.util.Utils;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class ImageTransmitManager {
 
@@ -85,24 +71,20 @@ public class ImageTransmitManager {
     }
 
     private void executeTask(ImageTransTask task) {
-        String url = Utils.buildUploadURL(task.ip);
-        OKHttpUtil.upLoadFile(url, task.files,
-                new Callback() {
+        ImageSendListener callback = task.callback;
+        boolean startUpRes = OKHttpUtil.startUpload(buildStartUploadUrl(task.ip), callback);
+        if (!startUpRes) {
+            return;
+        }
+        OKHttpUtil.upLoadFile(buildUploadURL(task.ip), task.files, callback);
+    }
 
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        if (task.callback != null) {
-                            task.callback.onSuccess();
-                        }
-                    }
+    private String buildStartUploadUrl(String ip) {
+        return String.format("http://%s:8080/start_upload", ip);
+    }
 
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        if (task.callback != null) {
-                            task.callback.onFail();
-                        }
-                    }
-                });
+    private String buildUploadURL(String ip) {
+        return String.format("http://%s:8080/upload", ip);
     }
 
     public void startRecServer() {

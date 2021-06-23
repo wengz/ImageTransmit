@@ -15,8 +15,4 @@ public class Utils {
         return newRecFile;
     }
 
-    public static String buildUploadURL(String ip) {
-        return String.format("http://%s:8080/upload", ip);
-    }
-
 }

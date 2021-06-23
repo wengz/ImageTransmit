@@ -35,4 +35,12 @@ public class UploadController {
             imageRecListener.onImageReceive(recFiles);
         }
     }
+
+    @PostMapping(path = "/start_upload")
+    void startUpload() {
+        ImageRecListener imageRecListener = ImageTransmitManager.getInstance().getImageRecListener();
+        if (imageRecListener != null) {
+            imageRecListener.onImageRecStart();
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.tpv.imagetransmit.util;
+package com.tpv.imagetransmit;
 
 public interface ImageSendListener {
 

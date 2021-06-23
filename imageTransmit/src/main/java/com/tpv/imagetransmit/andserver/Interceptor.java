@@ -16,17 +16,7 @@ public class Interceptor implements HandlerInterceptor {
 
     @Override
     public boolean onIntercept(@NonNull HttpRequest request, @NonNull HttpResponse response, @NonNull RequestHandler handler) throws Exception {
-        String httpPath = request.getPath();
-        if (isUploadRequest(httpPath)) {
-            ImageRecListener imageRecListener = ImageTransmitManager.getInstance().getImageRecListener();
-            if (imageRecListener != null) {
-                imageRecListener.onImageRecStart();
-            }
-        }
         return false;
     }
 
-    private boolean isUploadRequest(String reqPath) {
-        return TextUtils.equals(reqPath, "/upload");
-    }
 }

@@ -1,7 +1,5 @@
 package com.tpv.imagetransmit;
 
-import com.tpv.imagetransmit.util.ImageSendListener;
-
 import java.util.List;
 
 public class ImageTransTask {
