@@ -11,7 +11,7 @@
 ImageTransmitManager.getInstance().setImageRecListener(new ImageRecListener(){
 
 	@Override
-	public void onImageUploadStart() {
+	public void onImageRecStart() {
        		...
     	}
 	    
