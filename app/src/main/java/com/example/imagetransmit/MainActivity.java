@@ -33,10 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] mLocalImgs = {
             "/sdcard/Screenshot/Screen20210621170506.jpg",
+            "/sdcard/Screenshot/Screen20210623105724.jpg",
+            "/sdcard/Screenshot/Screen20210623105815.jpg",
             "/sdcard/Screenshot/Screen20210621171204.jpg",
+            "/sdcard/Screenshot/Screen20210623105743.jpg",
+            "/sdcard/Screenshot/Screen20210623105826.jpg",
             "/sdcard/Screenshot/Screen20210622102905.jpg",
+            "/sdcard/Screenshot/Screen20210623105800.jpg",
     };
-
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
@@ -58,9 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ImageTransTask imageTransTask = new ImageTransTask();
                 imageTransTask.ip = "127.0.0.1";
-                imageTransTask.files = new ArrayList<>();
-                imageTransTask.files.add(mLocalImgs[0]);
-                imageTransTask.files.add(mLocalImgs[1]);
+                imageTransTask.files = Arrays.asList(mLocalImgs);
                 imageTransTask.callback = new ImageSendListener() {
 
                     @Override
@@ -74,25 +76,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
                 ImageTransmitManager.getInstance().putTransTask(imageTransTask);
-
-                ImageTransTask imageTransTask2 = new ImageTransTask();
-                imageTransTask2.ip = "127.0.0.1";
-                imageTransTask2.files = new ArrayList<>();
-                imageTransTask2.files.add(mLocalImgs[2]);
-                imageTransTask2.callback = new ImageSendListener() {
-
-                    @Override
-                    public void onSuccess() {
-                        Log.d("zzz", "onSuccess: imageTransTask_2 >>> success");
-                    }
-
-                    @Override
-                    public void onFail() {
-                        Log.d("zzz", "onSuccess: imageTransTask_2 >>> fail");
-                    }
-                };
-                ImageTransmitManager.getInstance().putTransTask(imageTransTask2);
-
             }
         });
 
@@ -103,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
                 for (File image :images) {
                     Log.d("zzz", "onImageReceive: >>> image="+image.getAbsolutePath());
                 }
+            }
+
+            @Override
+            public void onImageRecStart() {
+                Log.d("zzz", "onImageUploadStart: ");
             }
         });
 

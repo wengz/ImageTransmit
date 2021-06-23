@@ -7,4 +7,5 @@ public interface ImageRecListener {
 
     void onImageReceive(List<File> images);
 
+    void onImageRecStart();
 }
