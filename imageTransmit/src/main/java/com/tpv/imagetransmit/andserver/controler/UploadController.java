@@ -21,18 +21,33 @@ public class UploadController {
     public static final String TAG = "UploadController";
 
     @PostMapping(path = "/upload")
-    void upload(@RequestParam(name = "images") MultipartFile[] images) throws IOException {
-        List<File> recFiles = new ArrayList<>();
-        if (images != null) {
-            for (MultipartFile multipartFile : images) {
-                File fileSaveTo = Utils.createNewReceiveFile(multipartFile.getFilename());
-                multipartFile.transferTo(fileSaveTo);
-                recFiles.add(fileSaveTo);
-            }
-        }
+    void upload(@RequestParam(name = "images") MultipartFile[] images) throws Exception {
         ImageRecListener imageRecListener = ImageTransmitManager.getInstance().getImageRecListener();
-        if (imageRecListener != null) {
-            imageRecListener.onImageReceive(recFiles);
+        try {
+            List<File> recFiles = new ArrayList<>();
+            if (images != null) {
+                for (MultipartFile multipartFile : images) {
+                    File fileSaveTo = Utils.createNewReceiveFile(multipartFile.getFilename());
+                    multipartFile.transferTo(fileSaveTo);
+                    recFiles.add(fileSaveTo);
+                }
+            }
+            if (imageRecListener != null) {
+                try {
+                    imageRecListener.onImageReceive(recFiles);
+                } catch (Exception e) {
+                    Log.e(TAG, "exception >>> ImageRecListener#onImageReceive " + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            if (imageRecListener != null) {
+                try {
+                    imageRecListener.onImageTransFail(e);
+                } catch (Exception ex) {
+                    Log.e(TAG, "exception >>> ImageRecListener#onImageTransFail " + e.getMessage());
+                }
+            }
+            throw e;
         }
     }
 

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFail() {
-                        Log.d("zzz", "onSuccess: imageTransTask_1 >>> fail");
+                        Log.d("zzz", "onFail: imageTransTask_1 >>> fail");
                     }
                 };
                 ImageTransmitManager.getInstance().putTransTask(imageTransTask);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFail() {
-                        Log.d("zzz", "onSuccess: imageTransTask_2 >>> fail");
+                        Log.d("zzz", "onFail: imageTransTask_2 >>> fail");
                     }
                 };
                 ImageTransmitManager.getInstance().putTransTask(imageTransTask);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFail() {
-                        Log.d("zzz", "onSuccess: imageTransTask_3 >>> fail");
+                        Log.d("zzz", "onFail: imageTransTask_3 >>> fail");
                     }
                 };
                 ImageTransmitManager.getInstance().putTransTask(imageTransTask);
@@ -120,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
                 for (File image :images) {
                     Log.d("zzz", "onImageReceive: >>> image="+image.getAbsolutePath());
                 }
+            }
+
+            @Override
+            public void onImageTransFail(Throwable e) {
+                Log.d("zzz", "onImageTransFail: e="+e);
             }
 
             @Override
