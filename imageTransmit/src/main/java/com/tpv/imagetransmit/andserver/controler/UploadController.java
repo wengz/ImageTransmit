@@ -15,13 +15,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.tpv.imagetransmit.util.Utils.*;
+
 @RestController
 public class UploadController {
 
-    public static final String TAG = "UploadController";
 
     @PostMapping(path = "/upload")
     void upload(@RequestParam(name = "images") MultipartFile[] images) throws Exception {
+        Log.d(TAG, "UploadController#upload");
+
         ImageRecListener imageRecListener = ImageTransmitManager.getInstance().getImageRecListener();
         try {
             List<File> recFiles = new ArrayList<>();
@@ -40,6 +43,8 @@ public class UploadController {
                 }
             }
         } catch (Exception e) {
+            Log.d(TAG, "exception >>> UploadController#upload"+e.getMessage());
+
             if (imageRecListener != null) {
                 try {
                     imageRecListener.onImageTransFail(e);
@@ -52,10 +57,17 @@ public class UploadController {
     }
 
     @PostMapping(path = "/start_upload")
-    void startUpload() {
-        ImageRecListener imageRecListener = ImageTransmitManager.getInstance().getImageRecListener();
-        if (imageRecListener != null) {
-            imageRecListener.onImageRecStart();
+    void startUpload() throws Exception {
+        Log.d(TAG, "UploadController#startUpload");
+
+        try {
+            ImageRecListener imageRecListener = ImageTransmitManager.getInstance().getImageRecListener();
+            if (imageRecListener != null) {
+                imageRecListener.onImageRecStart();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "exception >>> ImageRecListener#onImageRecStart " + e.getMessage());
+            throw e;
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.tpv.imagetransmit.okhttp;
 
+import android.util.Log;
+
 import com.tpv.imagetransmit.ImageSendListener;
 import com.yanzhenjie.andserver.http.StatusCode;
 
@@ -16,6 +18,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.internal.Util;
+
+import static com.tpv.imagetransmit.util.Utils.*;
 
 public class OKHttpUtil {
 
@@ -35,6 +39,8 @@ public class OKHttpUtil {
                 return false;
             }
         }catch (Exception e){
+            Log.d(TAG, "exception >>> OKHttpUtil#startUpload: "+e.getMessage());
+
             if (callback != null) {
                 callback.onFail();
             }
@@ -57,6 +63,7 @@ public class OKHttpUtil {
                 }
             }
         } catch (Exception e) {
+            Log.d(TAG, "exception >>> OKHttpUtil#upLoadFile: "+e.getMessage());
             if (callback != null) {
                 callback.onFail();
             }

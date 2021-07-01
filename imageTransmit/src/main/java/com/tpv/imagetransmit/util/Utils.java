@@ -6,6 +6,8 @@ import java.io.File;
 
 public class Utils {
 
+    public static final String TAG = "ImageTransmit";
+
     public static final String FOLDER_NAME_IMAGE_TRANSMIT = "image_transmit";
     public static final String FOLDER_NAME_RECEIVE = "receive";
 

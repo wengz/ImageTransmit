@@ -8,9 +8,9 @@ import com.yanzhenjie.andserver.Server;
 
 import java.util.concurrent.TimeUnit;
 
-public class AndServerManager {
+import static com.tpv.imagetransmit.util.Utils.*;
 
-    public static final String TAG = "AndServerManager";
+public class AndServerManager {
 
     private Server mServer;
 
